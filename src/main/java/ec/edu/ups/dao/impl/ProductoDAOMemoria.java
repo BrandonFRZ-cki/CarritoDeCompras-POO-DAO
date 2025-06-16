@@ -12,7 +12,7 @@ public class ProductoDAOMemoria implements ProductoDAO {
     private List<Producto> productos;
 
     public ProductoDAOMemoria() {
-        productos = new ArrayList<Producto>();
+        productos = new ArrayList<>();
     }
 
     @Override

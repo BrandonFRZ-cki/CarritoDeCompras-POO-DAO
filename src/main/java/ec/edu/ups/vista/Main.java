@@ -6,15 +6,12 @@ import ec.edu.ups.dao.impl.ProductoDAOMemoria;
 
 public class Main {
     public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-
-                ProductoAnadirView productoView = new ProductoAnadirView();
-                ProductoListaView productoListaView = new ProductoListaView();
-                ProductoDAO productoDAO = new ProductoDAOMemoria();
-
-                new ProductoController(productoDAO, productoView, productoListaView);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            ProductoDAO productoDAO = new ProductoDAOMemoria();
+            ProductoAnadirView productoView = new ProductoAnadirView();
+            ProductoListaView productoListaView = new ProductoListaView();
+            ProductoModificarView productoGestionView = new ProductoModificarView();
+            new ProductoController(productoDAO, productoView, productoListaView, productoGestionView);
         });
     }
 }

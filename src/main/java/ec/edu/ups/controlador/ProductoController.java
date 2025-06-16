@@ -4,6 +4,7 @@ import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Producto;
 import ec.edu.ups.vista.ProductoAnadirView;
 import ec.edu.ups.vista.ProductoListaView;
+import ec.edu.ups.vista.ProductoModificarView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,14 +14,17 @@ public class ProductoController {
 
     private final ProductoAnadirView productoAnadirView;
     private final ProductoListaView productoListaView;
+    private final ProductoModificarView productoModificarView;
     private final ProductoDAO productoDAO;
 
     public ProductoController(ProductoDAO productoDAO,
                               ProductoAnadirView productoAnadirView,
-                              ProductoListaView productoListaView) {
+                              ProductoListaView productoListaView,
+                              ProductoModificarView productoModificarView) {
         this.productoDAO = productoDAO;
         this.productoAnadirView = productoAnadirView;
         this.productoListaView = productoListaView;
+        this.productoModificarView = productoModificarView;
         configurarEventos();
     }
 
@@ -43,6 +47,20 @@ public class ProductoController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 listarProductos();
+            }
+        });
+
+        productoModificarView.getBtnActualizar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarProducto();
+            }
+        });
+
+        productoModificarView.getBtnEliminar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eliminarProducto();
             }
         });
     }
@@ -68,5 +86,31 @@ public class ProductoController {
     private void listarProductos() {
         List<Producto> productos = productoDAO.listarTodos();
         productoListaView.cargarDatos(productos);
+    }
+
+    private void actualizarProducto() {
+        int codigo = productoModificarView.getCodigo();
+        Producto producto = productoDAO.buscarPorCodigo(codigo);
+
+        if (producto != null) {
+            String nuevoNombre = productoModificarView.getNuevoNombre();
+            double nuevoPrecio = productoModificarView.getNuevoPrecio();
+
+            producto.setNombre(nuevoNombre);
+            producto.setPrecio(nuevoPrecio);
+            productoDAO.actualizar(producto);
+            productoModificarView.mostrarMensaje("Producto actualizado correctamente.");
+            listarProductos(); // Refrescar la lista
+        } else {
+            productoModificarView.mostrarMensaje("Error: Producto no encontrado.");
+        }
+    }
+
+    private void eliminarProducto() {
+        int codigo = productoModificarView.getCodigo();
+
+        productoDAO.eliminar(codigo);
+        productoModificarView.mostrarMensaje("Producto eliminado correctamente.");
+        listarProductos(); // Refrescar la lista
     }
 }

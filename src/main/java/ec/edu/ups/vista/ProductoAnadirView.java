@@ -23,7 +23,7 @@ public class ProductoAnadirView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 500);
         //setResizable(false);
-        setLocationRelativeTo(null);
+        setLocation(100,500);
         setVisible(true);
         //pack();
 

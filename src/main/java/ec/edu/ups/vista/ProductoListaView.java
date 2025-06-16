@@ -20,8 +20,9 @@ public class ProductoListaView extends JFrame {
         setContentPane(panelPrincipal);
         setTitle("Listado de Productos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 500);
+        setSize(700, 500);
         setLocationRelativeTo(null);
+        setResizable(false);
         setVisible(true);
 
         modelo = new DefaultTableModel();
