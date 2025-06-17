@@ -13,13 +13,12 @@ public class Main {
             PrincipalView principalView = new PrincipalView();
             ProductoDAO productoDAO = new ProductoDAOMemoria();
 
-            ProductoAnadirView productoAnadirView = new ProductoAnadirView();
             ProductoController productoController = new ProductoController(productoDAO);
-            productoController.setProductoAnadirView(productoAnadirView);
-
             principalView.getMenuItemCrearProducto().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    ProductoAnadirView productoAnadirView = new ProductoAnadirView();
+                    productoController.setProductoAnadirView(productoAnadirView);
                     principalView.getjDesktopPane().add(productoAnadirView);
                 }
             });
