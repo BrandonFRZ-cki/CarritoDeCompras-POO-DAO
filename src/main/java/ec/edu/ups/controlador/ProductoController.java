@@ -12,10 +12,10 @@ import java.util.List;
 
 public class ProductoController {
 
-    private final ProductoAnadirView productoAnadirView;
-    private final ProductoListaView productoListaView;
-    private final ProductoModificarView productoModificarView;
-    private final ProductoDAO productoDAO;
+    private ProductoAnadirView productoAnadirView;
+    private ProductoListaView productoListaView;
+    private ProductoModificarView productoModificarView;
+    private ProductoDAO productoDAO;
 
     public ProductoController(ProductoDAO productoDAO,
                               ProductoAnadirView productoAnadirView,
@@ -27,14 +27,12 @@ public class ProductoController {
         this.productoModificarView = productoModificarView;
         configurarEventos();
     }
+    public ProductoController(ProductoDAO productoDAO) {
+        this.productoDAO = productoDAO;
+    }
 
     private void configurarEventos() {
-        productoAnadirView.getBtnAceptar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarProducto();
-            }
-        });
+
 
         productoListaView.getBtnBuscar().addActionListener(new ActionListener() {
             @Override
@@ -63,7 +61,9 @@ public class ProductoController {
                 eliminarProducto();
             }
         });
+
     }
+
 
     private void guardarProducto() {
         int codigo = Integer.parseInt(productoAnadirView.getTxtCodigo().getText());
@@ -105,7 +105,6 @@ public class ProductoController {
             productoModificarView.mostrarMensaje("Error: Producto no encontrado.");
         }
     }
-
     private void eliminarProducto() {
         int codigo = productoModificarView.getCodigo();
 
@@ -113,4 +112,7 @@ public class ProductoController {
         productoModificarView.mostrarMensaje("Producto eliminado correctamente.");
         listarProductos(); // Refrescar la lista
     }
+     public void setProductoAnadirView(ProductoAnadirView productoAnadirView) {
+         this.productoAnadirView = productoAnadirView;
+     }
 }
